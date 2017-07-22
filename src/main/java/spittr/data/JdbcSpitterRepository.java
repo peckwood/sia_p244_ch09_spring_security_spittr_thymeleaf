@@ -22,19 +22,21 @@ public class JdbcSpitterRepository implements SpitterRepository {
 
   public Spitter save(Spitter spitter) {
     jdbc.update(
-        "insert into Spitter (username, password, first_name, last_name, email)" +
-        " values (?, ?, ?, ?, ?)",
+        "insert into Spitter (username, password, first_name, last_name, email, enabled, role)" +
+        " values (?, ?, ?, ?, ?, ?, ?)",
         spitter.getUsername(),
         spitter.getPassword(),
         spitter.getFirstName(),
         spitter.getLastName(),
-        spitter.getEmail());
+        spitter.getEmail(),
+    	spitter.getEnabled(),
+    	spitter.getRole());
     return spitter; // TODO: Determine value for id
   }
 
   public Spitter findByUsername(String username) {
     return jdbc.queryForObject(
-        "select id, username, null, first_name, last_name, email from Spitter where username=?", 
+        "select id, username, null, first_name, last_name, email, enabled, role from Spitter where username=?", 
         new SpitterRowMapper(), 
         username);
   }
@@ -47,7 +49,10 @@ public class JdbcSpitterRepository implements SpitterRepository {
           null,
           rs.getString("first_name"),
           rs.getString("last_name"),
-          rs.getString("email"));
+          rs.getString("email"),
+          rs.getBoolean("enabled"),
+          rs.getString("role")
+    	);
     }
   }
 

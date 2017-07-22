@@ -1,48 +1,61 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <title>Spitter</title>
-    <link rel="stylesheet" type="text/css" 
-          th:href="@{/resources/style.css}"></link>
-          <meta charset="UTF-8"></meta>
-  </head>
-  <body>
-    <div id="header" th:include="page :: header"></div>
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Spitter</title>
+<link rel="stylesheet" type="text/css" th:href="@{/resources/style.css}"></link>
+<meta charset="UTF-8"></meta>
+</head>
+<body>
+	<div id="header" th:include="page :: header"></div>
 
-    <div id="content">
-      <h1>Register</h1>
-  
-      <form method="POST" th:object="${spitter}">
-        <div class="errors" th:if="${#fields.hasErrors('*')}">
-          <ul>
-            <li th:each="err : ${#fields.errors('*')}" 
-                th:text="${err}">Input is incorrect</li>
-          </ul>
-        </div>
-        <label th:class="${#fields.hasErrors('firstName')}? 'error'">First Name</label>: 
-          <input type="text" th:field="*{firstName}"  
-                 th:class="${#fields.hasErrors('firstName')}? 'error'" /><br/>
-  
-        <label th:class="${#fields.hasErrors('lastName')}? 'error'">Last Name</label>: 
-          <input type="text" th:field="*{lastName}"
-                 th:class="${#fields.hasErrors('lastName')}? 'error'" /><br/>
-  
-        <label th:class="${#fields.hasErrors('email')}? 'error'">Email</label>: 
-          <input type="text" th:field="*{email}"
-                 th:class="${#fields.hasErrors('email')}? 'error'" /><br/>
-  
-        <label th:class="${#fields.hasErrors('username')}? 'error'">Username</label>: 
-          <input type="text" th:field="*{username}"
-                 th:class="${#fields.hasErrors('username')}? 'error'" /><br/>
-  
-        <label th:class="${#fields.hasErrors('password')}? 'error'">Password</label>: 
-          <input type="password" th:field="*{password}"  
-                 th:class="${#fields.hasErrors('password')}? 'error'" /><br/>
-        <input type="submit" value="Register" />
-      
-      
-      </form>
-    </div>
-    <div id="footer" th:include="page :: copy"></div>
-  </body>
+	<div id="content">
+		<h1>Register</h1>
+
+		<form method="POST" th:object="${spitter}" accept-charset="UTF-8">
+			<!-- if you don't want to see error next line, add the csrf input-->
+			<!-- Invalid CSRF Token 'null' was found on the request parameter '_csrf' or header 'X-CSRF-TOKEN'. -->
+			<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"></input>
+			<div class="errors" th:if="${#fields.hasErrors('*')}">
+				<ul>
+					<li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input
+						is incorrect</li>
+				</ul>
+			</div>
+			<label th:class="${#fields.hasErrors('firstName')}? 'error'">First
+				Name</label>: <input type="text" th:field="*{firstName}"
+				th:class="${#fields.hasErrors('firstName')}? 'error'"></input><br />
+
+			<label th:class="${#fields.hasErrors('lastName')}? 'error'">Last
+				Name</label>: <input type="text" th:field="*{lastName}"
+				th:class="${#fields.hasErrors('lastName')}? 'error'"></input><br />
+
+			<label th:class="${#fields.hasErrors('email')}? 'error'">Email</label>:
+			<input type="text" th:field="*{email}"
+				th:class="${#fields.hasErrors('email')}? 'error'"></input><br /> <label
+				th:class="${#fields.hasErrors('username')}? 'error'">Username</label>:
+			<input type="text" th:field="*{username}"
+				th:class="${#fields.hasErrors('username')}? 'error'"></input><br />
+
+			<label th:class="${#fields.hasErrors('password')}? 'error'">Password</label>:
+			<input type="password" th:field="*{password}"
+				th:class="${#fields.hasErrors('password')}? 'error'"></input><br />
+
+			<label th:class="${#fields.hasErrors('enabled')}? 'error'">启用</label>
+			<input type="radio" th:field="*{enabled}" value="true" checked="checked"
+				th:class="${#fields.hasErrors('password')}? 'error'"></input> <label
+				th:class="${#fields.hasErrors('enabled')}? 'error'">不启用</label> <input
+				type="radio" th:field="*{enabled}" value="false"
+				th:class="${#fields.hasErrors('password')}? 'error'"></input><br />
+
+			<label th:class="${#fields.hasErrors('role')}? 'error'">角色</label>: <input
+				type="text" th:field="*{role}"
+				th:class="${#fields.hasErrors('password')}? 'error'"></input><br />
+
+			<input type="submit" value="Register"></input>
+
+
+		</form>
+	</div>
+	<div id="footer" th:include="page :: copy"></div>
+</body>
 </html>

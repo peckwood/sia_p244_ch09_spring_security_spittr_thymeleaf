@@ -32,22 +32,32 @@ public class Spitter {
   @Email(message="{email.valid}")
   private String email;
 
+  @NotNull
+  private Boolean enabled;
+  
+  @NotNull
+  private String role;
+  
   public Spitter() {}
   
-  public Spitter(String username, String password, String firstName, String lastName, String email) {
-    this(null, username, password, firstName, lastName, email);
-  }
+  public Spitter( String username, String password, String firstName, String lastName, String email,
+		Boolean enabled, String role) {
+	  this(null, username, password, firstName, lastName, email, enabled, role);
+}
 
-  public Spitter(Long id, String username, String password, String firstName, String lastName, String email) {
-    this.id = id;
-    this.username = username;
-    this.password = password;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.email = email;
-  }
+  public Spitter(Long id, String username, String password, String firstName, String lastName, String email,
+		Boolean enabled, String role) {
+	this.id = id;
+	this.username = username;
+	this.password = password;
+	this.firstName = firstName;
+	this.lastName = lastName;
+	this.email = email;
+	this.enabled = enabled;
+	this.role = role;
+}
 
-  public String getUsername() {
+public String getUsername() {
     return username;
   }
 
@@ -104,5 +114,27 @@ public class Spitter {
   public int hashCode() {
     return HashCodeBuilder.reflectionHashCode(this, "firstName", "lastName", "username", "password", "email");
   }
+
+public Boolean getEnabled() {
+	return enabled;
+}
+
+public void setEnabled(Boolean enabled) {
+	this.enabled = enabled;
+}
+
+public String getRole() {
+	return role;
+}
+
+public void setRole(String role) {
+	this.role = role;
+}
+
+@Override
+public String toString() {
+	return "Spitter [id=" + id + ", username=" + username + ", password=" + password + ", firstName=" + firstName
+			+ ", lastName=" + lastName + ", email=" + email + ", enabled=" + enabled + ", role=" + role + "]";
+}
 
 }

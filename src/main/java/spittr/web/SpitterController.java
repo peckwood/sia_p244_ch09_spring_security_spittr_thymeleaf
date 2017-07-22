@@ -2,6 +2,7 @@ package spittr.web;
 
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
+import javax.servlet.ServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,12 +40,13 @@ public class SpitterController {
 	}
 
 	@RequestMapping(value = "/register", method = POST)
-	public String processRegistration(@Valid Spitter spitter, Errors errors) {
-		System.out.println(spitter.getFirstName());
+	public String processRegistration(@Valid Spitter spitter, Errors errors, ServletRequest request) {
+		System.out.println("request character encoding: " + request.getCharacterEncoding());
+		System.out.println("spitter in form: " + spitter);
 		if (errors.hasErrors()) {
+			System.out.println(errors.getFieldError("role"));
 			return "registerForm";
 		}
-
 		spitterRepository.save(spitter);
 		return "redirect:/spitter/" + spitter.getUsername();
 	}
@@ -52,6 +54,7 @@ public class SpitterController {
 	@RequestMapping(value = "/{username}", method = GET)
 	public String showSpitterProfile(@PathVariable String username, Model model) {
 		Spitter spitter = spitterRepository.findByUsername(username);
+		System.out.println("spitter found: " + spitter);
 		model.addAttribute(spitter);
 		return "profile";
 	}
