@@ -1,8 +1,5 @@
-#### Changes
+#### Changes introduced by Security
 
-- pom.xml added:
-  - `org.springframework.security:spring-security-config`
-  - `org.springframework.security:spring-security-web`
-  - `org.thymeleaf.extras.thymeleaf-extras-springsecurity3`
-  - `org.springframework.ldap.spring-ldap-core`
-  - ​
+- some security configuration files
+  - spittr.config.SecurityWebApplicationInitializer
+  - spittr.config.SecurityConfig
