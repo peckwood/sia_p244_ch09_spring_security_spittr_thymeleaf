@@ -35,7 +35,6 @@ public class Spitter {
   @NotNull
   private Boolean enabled;
   
-  @NotNull
   private String role;
   
   public Spitter() {}

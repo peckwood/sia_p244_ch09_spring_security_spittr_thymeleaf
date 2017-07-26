@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import spittr.Spitter;
@@ -14,7 +15,9 @@ import spittr.Spitter;
 public class JdbcSpitterRepository implements SpitterRepository {
   
   private JdbcOperations jdbc;
-
+  @Autowired
+  private PasswordEncoder passwordEncoder;
+  
   @Autowired
   public JdbcSpitterRepository(JdbcOperations jdbc) {
     this.jdbc = jdbc;
@@ -25,12 +28,12 @@ public class JdbcSpitterRepository implements SpitterRepository {
         "insert into Spitter (username, password, first_name, last_name, email, enabled, role)" +
         " values (?, ?, ?, ?, ?, ?, ?)",
         spitter.getUsername(),
-        spitter.getPassword(),
+        passwordEncoder.encode(spitter.getPassword()),
         spitter.getFirstName(),
         spitter.getLastName(),
         spitter.getEmail(),
     	spitter.getEnabled(),
-    	spitter.getRole());
+    	"ROLE_SPITTER");
     return spitter; // TODO: Determine value for id
   }
 

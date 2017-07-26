@@ -1,24 +1,53 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <title>Spitter</title>
-    <link rel="stylesheet" 
-          type="text/css" 
-          th:href="@{/resources/style.css}"></link>
-  </head>
-  <body>
-    <div id="header" th:include="page :: header"></div>
-  
-    <div id="content">
-      <h1>Welcome to Spitter</h1>
-  
-      <a th:href="@{/spittles}">Spittles</a> | 
-      <a th:href="@{/spitter/register}">Register</a>
-      
-      <br/>
-      
-      View: <span th:text="${view}">unknown</span>
-    </div>
-    <div id="footer" th:include="page :: copy"></div>
-  </body>
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+	<!-- xmlns:sec="http://www.thymeleaf.org/extras/spring-security"> -->
+	
+<head>
+<title>Spitter</title>
+<link rel="stylesheet" type="text/css" th:href="@{/resources/style.css}"></link>
+</head>
+<body>
+	<div id="header" th:include="page :: header"></div>
+
+	<div id="content">
+		<h1>Welcome to Spitter</h1>
+		<div sec:authorize="isAuthenticated()">
+			Hello <span sec:authentication="name">someone</span>
+		</div>
+		<!-- <div th:text="${#authentication.name}">The value of the "name"
+			property of the authentication object should appear here.</div>
+
+		<div th:text="${#authentication.name}">The value of the "name"
+			property of the authentication object should appear here.</div>
+		<div th:if="${#authorization.expression('hasRole(''ROLE_SPITTER'')')}">
+			This will only be displayed if authenticated user has role
+			ROLE_SPITTER.</div> -->
+		<div sec:authorize="hasRole('ROLE_SPITTER')">This will only be
+			displayed if authenticated user has role ROLE_SPITTER.</div>
+		<div sec:authorize="isAuthenticated()">This content is only
+			shown to authenticated users.</div>
+		<div sec:authorize="hasRole('ROLE_SPITTER')">This content is only
+			shown to ROLE_SPITTERs.</div>
+		<div sec:authorize="hasRole('ROLE_ADMIN')">This content is only
+			shown to admins.</div>
+		<div sec:authorize="hasAuthority('ROLE_SPITTER')">This content is only
+			shown to ROLE_SPITTERs.</div>
+			
+		<!-- .antMatchers("/spitter/me").access("hasRole('ROLE_ANONYMOUS') and hasIpAddress('0:0:0:0:0:0:0:1')") -->
+		<div sec:authrize-url="/spitter/me">
+			<a th:href="@{/spitter/me}">spitter me(only anonymous user can see me)</a>
+		</div>
+		<div sec:authrize-url="/spitter_only">
+			<a th:href="@{/spitter_only}">Spitter Only!</a>
+		</div>
+
+		<a th:href="@{/spittles}">Spittles</a> | <a
+			th:href="@{/spitter/register}">Register</a> | <a th:href="@{/login22}">Login</a>
+		| <a sec:authorize="isAuthenticated()" th:href="@{/logout1}">Logout(only authenticated can see me!)</a> 
+		<br /> 
+		View: <span	th:text="${view}">unknown</span>
+	</div>
+	<div id="footer" th:include="page :: copy"></div>
+</body>
 </html>

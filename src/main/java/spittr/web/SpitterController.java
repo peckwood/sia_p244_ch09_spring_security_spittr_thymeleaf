@@ -6,6 +6,7 @@ import javax.servlet.ServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -33,8 +34,8 @@ public class SpitterController {
 
 	@RequestMapping(value = "/register", method = GET)
 	public String showRegistrationForm(Model model) {
-		//key is inferred to "spitter"
-		//which corresponds to the commandName in "registerForm.jsp"
+		// key is inferred to "spitter"
+		// which corresponds to the commandName in "registerForm.jsp"
 		model.addAttribute(new Spitter());
 		return "registerForm";
 	}
@@ -51,12 +52,23 @@ public class SpitterController {
 		return "redirect:/spitter/" + spitter.getUsername();
 	}
 
+	@RequestMapping(value = "/me", method = GET)
+	public String me() {
+		System.out.println("ME ME ME ME ME ME ME ME ME ME ME");
+		return "home";
+	}
+
 	@RequestMapping(value = "/{username}", method = GET)
 	public String showSpitterProfile(@PathVariable String username, Model model) {
 		Spitter spitter = spitterRepository.findByUsername(username);
 		System.out.println("spitter found: " + spitter);
 		model.addAttribute(spitter);
 		return "profile";
+	}
+	
+	@RequestMapping(value = "/spitter_only", method = GET)
+	public String spitterOnly() {
+		return "spitterOnly";
 	}
 
 }

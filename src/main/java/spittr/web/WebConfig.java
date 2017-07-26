@@ -6,7 +6,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.thymeleaf.extras.springsecurity3.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
@@ -27,10 +29,12 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     viewResolver.setCharacterEncoding("UTF-8");//needed for rendering Asian characters
     return viewResolver;
   }
+  
   @Bean
   public SpringTemplateEngine templateEngine(TemplateResolver templateResolver) {
     SpringTemplateEngine templateEngine = new SpringTemplateEngine();
     templateEngine.setTemplateResolver(templateResolver);
+    templateEngine.addDialect(new SpringSecurityDialect());
     return templateEngine;
   }
 
@@ -45,8 +49,12 @@ public class WebConfig extends WebMvcConfigurerAdapter {
   }
     
   @Override
+  public void addViewControllers(ViewControllerRegistry registry) {
+	  registry.addViewController("/login22").setViewName("login");
+  }
+  
+  @Override
   public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
     configurer.enable();
   }
-  
 }
