@@ -18,7 +18,7 @@ Log in username is fxkill2000, password is 123123
 
 ---
 
-The next commit:
+The next commit (af6c3e5):
 
 ### Changes
 
@@ -52,7 +52,7 @@ The next commit:
   - `/main/webapp/WEB-INF/views/home.html` used the tags, look for `sec:` attributes
   - `sec:authrize-url` doesn't seem to work
 
-### What's ignored in this chapter
+### What chapters are ignored?
 
 - 9.2.1 Working with an in-memory user store
 - 9.2.3 Applying LDAP-backed authentication
